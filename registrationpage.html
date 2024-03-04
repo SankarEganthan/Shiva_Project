@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voting Page</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="">
+      <div class="">
+        <div class="form-wrapper is-active">
+          <form
+            class="form-registration form-signup"
+            id="form-registration-submit"
+          >
+            <fieldset>
+              <div class="input-block">
+                <label for="voter-ID">Voter ID *</label>
+                <input id="voter-ID" type="text" required />
+              </div>
+              <div class="input-block">
+                <label for="address">Address *</label>
+                <input id="address" type="text" required />
+              </div>
+              <div class="input-block">
+                <label for="district">District *</label>
+                <select name="district" id="district" required>
+                  <option value="chennai">Chennai</option>
+                  <option value="thiruvallur">Thiruvallur</option>
+                </select>
+              </div>
+              <div class="input-block">
+                <label for="state">State *</label>
+                <select name="state" id="state" required>
+                  <option value="tamil nadu">Tamil Nadu</option>
+                </select>
+              </div>
+              <div class="input-block">
+                <label for="signup-password">Password *</label>
+                <input id="signup-password" type="password" required />
+              </div>
+              <div class="input-block">
+                <label for="signup-password-confirm">Confirm password *</label>
+                <input id="signup-password-confirm" type="password" required />
+              </div>
+            </fieldset>
+            <button type="submit" class="btn-signup">Submit</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
