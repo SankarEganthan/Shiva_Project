@@ -1,20 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voting App - Dashboard Page</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voting App - Registration Page</title>
     <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-    <nav class="nav-bar">
-        <div></div>
-        <div>
-          <button class="log-out-button" id="dashboard">Dashboard</button>
-          <button class="log-out-button" id="log-out-button-id">Log Out</button>
-        </div>
-      </nav>
-      <div id="candidates-container-dashboard"></div>
-      <script type="module" src="script.js"></script>
-</body>
+  </head>
+  <body>
+   
+    <main>
+          <form
+            class="form-registration"
+            id="form-registration-submit"
+          >
+            <fieldset>
+              <div class="input-block">
+                <label for="user-name">Name *</label>
+                <input id="user-name" type="text" required />
+              </div>
+              <div class="input-block">
+                <label for="user-age">Age *</label>
+                <input id="user-age" type="number" required />
+              </div>
+              <div class="input-block">
+                <label for="gender">Gender *</label>
+                <select name="gender" id="gender" required>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="input-block">
+                <label for="signup-email">E-mail *</label>
+                <input id="signup-email" type="email" required />
+              </div>
+              <div class="input-block">
+                <label for="mobile-no">Mobile No *</label>
+                <input id="mobile-no" type="tel" required />
+              </div>
+              <div class="input-block">
+                <label for="adhaar-no">Adhaar No *</label>
+                <input id="adhaar-no" type="text" required />
+              </div>
+              <div class="input-block">
+                <label for="voter-ID">Voter ID *</label>
+                <input id="voter-ID" type="text" required />
+              </div>
+              <div class="input-block">
+                <label for="address">Address *</label>
+                <input id="address" type="text" required />
+              </div>
+              <div class="input-block">
+                <label for="district">District *</label>
+                <select name="district" id="district" required>
+                  <option value="chennai">Chennai</option>
+                  <option value="thiruvallur">Thiruvallur</option>
+                  <option value="kanchipuram">Kanchipuram</option>
+                </select>
+              </div>
+              <div class="input-block">
+                <label for="state">State *</label>
+                <select name="state" id="state" required>
+                  <option value="tamil nadu">Tamil Nadu</option>
+                </select>
+              </div>
+              <div class="input-block">
+                <label for="signup-password">Password *</label>
+                <input id="signup-password" type="password" required />
+              </div>
+              <div class="input-block">
+                <label for="signup-password-confirm">Confirm password *</label>
+                <input id="signup-password-confirm" type="password" required />
+              </div>
+            </fieldset>
+            <button type="submit" class="btn-signup">Submit</button>
+          </form>
+        </main>
+    <script type="module" src="script.js"></script>
+  </body>
 </html>
