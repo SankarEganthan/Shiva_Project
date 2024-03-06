@@ -11,6 +11,7 @@ body {
   background: #3b4465;
 }
 
+
 .forms-section {
   display: flex;
   flex-direction: column;
@@ -164,6 +165,22 @@ margin-top: 24px;
   left: 50%;
   transform: translate(-50%, -50%) !important;
   background-color: #fff;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 1360px) {
+  .form-registration {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: auto;
+    transform: none !important;
+  }
+}
+@media screen and (max-width: 680px) {
+  .input-block {
+    width: 100% !important;
+  }
 }
 
 .form-login {
