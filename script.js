@@ -244,18 +244,28 @@ async function displayCandidates(userDistrict, userState) {
       candidateDiv.classList.add("voters-card");
 
       // Display candidate information
-      candidateDiv.innerHTML = `<div class="voters-info">
-      <div>
-      <img src="${candidate.avatar}" alt="${candidate.candidate_name}" class="avatar" />
-      </div>
-      <div class="voter-details">
-      <p>Name: <span class="non-bold">${candidate.candidate_name}</span></p>
-      <p>Party: <span class="non-bold">${candidate.party_name}</span></p>
-      <p>District: <span class="non-bold">${candidate.district}</span></p>
-      <p>State: <span class="non-bold">${candidate.state}</span></p>
-      </div>
-      </div>
-          <input type="radio" name="candidate" value="${candidate.id}" id="candidate-${index}">
+      candidateDiv.innerHTML = `<div class="voters-info">   
+      <div class="voters-svg">
+            <div>
+              <img src="${candidate.party_image}" alt="${candidate.party_name}" class="avatar" />
+            </div>
+            <div>
+              <img src="${candidate.avatar}" alt="${candidate.candidate_name}" class="avatar" />
+            </div>
+          </div>
+        </div>
+          <div class="voters-information">
+            <div class="voter-details">
+              <p>Name: <span class="non-bold">${candidate.candidate_name}</span></p>
+              <p>Party: <span class="non-bold">${candidate.party_name}</span></p>
+              <p>District: <span class="non-bold">${candidate.district}</span></p>
+              <p>State: <span class="non-bold">${candidate.state}</span></p>          
+            </div>      
+            <div class="votes-value-radio">
+              <input type="radio" name="candidate" value="${candidate.id}" id="candidate-${index}">
+            </div>
+          </div>
+        </div>
       </div>`;
 
       candidatesContainer.appendChild(candidateDiv);
@@ -394,6 +404,58 @@ dashboardElement?.addEventListener("click", function () {
 });
 
 // Function to fetch and display all candidate data
+// async function displayAllCandidates() {
+//   try {
+//     const { data: candidates, error } = await supabase
+//       .from("ElectrolCandidates")
+//       .select("*")
+//       .order("id");
+
+//     if (error) {
+//       throw error;
+//     }
+
+//     if (!candidates || candidates.length === 0) {
+//       // Handle case where no candidates are found
+//       console.log("No candidates found");
+//       return;
+//     }
+
+//     const candidatesContainer = document.getElementById("candidates-container-dashboard");
+
+//     // Clear previous content if any
+//     candidatesContainer.innerHTML = "";
+
+
+//     // Iterate through candidates and display information
+//     candidates.forEach((candidate, index) => {
+//       const candidateDiv = document.createElement("div");
+//       candidateDiv.classList.add("voters-card");
+
+//       // Display candidate information
+//       candidateDiv.innerHTML = `<div class="voters-info">
+//       <div>
+//       <img src="${candidate.party_image}" alt="${candidate.party_name}" class="avatar" />
+//       </div>
+//       <div>
+//       <img src="${candidate.avatar}" alt="${candidate.candidate_name}" class="avatar" />
+//       </div>
+//       <div class="voter-details">
+//       <p>Name: <span class="non-bold">${candidate.candidate_name}</span></p>
+//       <p>Party: <span class="non-bold">${candidate.party_name}</span></p>
+//       <p>District: <span class="non-bold">${candidate.district}</span></p>
+//       <p>State: <span class="non-bold">${candidate.state}</span></p>
+//       </div>
+//       </div>
+//           <input type="radio" name="candidate" value="${candidate.id}" id="candidate-${index}">
+//       </div>`;
+
+//       candidatesContainer.appendChild(candidateDiv);
+//     });
+//   } catch (error) {
+//     console.error("Error fetching candidates:", error);
+//   }
+// }
 async function displayAllCandidates() {
   try {
     const { data: candidates, error } = await supabase
@@ -416,40 +478,62 @@ async function displayAllCandidates() {
     // Clear previous content if any
     candidatesContainer.innerHTML = "";
 
-    // // Filter candidates based on user's district and state
-    // const filteredCandidates = candidates.filter((candidate) => {
-    //   return (
-    //     candidate.district.toLowerCase() === userDistrict &&
-    //     candidate.state.toLowerCase() === userState
-    //   );
-    // });
-
     // Iterate through candidates and display information
-    candidates.forEach((candidate, index) => {
+    for (let index = 0; index < candidates.length; index++) {
+      const candidate = candidates[index];
+
+      // Fetch vote count for the current candidate
+      const { data: votes, error: voteError } = await supabase
+        .from("Votes")
+        .select("count", { count: "exact" })
+        .eq("candidate_id", candidate.id);
+
+      if (voteError) {
+        throw voteError;
+      }
+
+      const voteCount = votes ? votes[0].count : 0;
+
       const candidateDiv = document.createElement("div");
       candidateDiv.classList.add("voters-card");
 
-      // Display candidate information
+      // Display candidate information and vote count
       candidateDiv.innerHTML = `<div class="voters-info">
-      <div>
-      <img src="${candidate.avatar}" alt="${candidate.candidate_name}" class="avatar" />
-      </div>
-      <div class="voter-details">
-      <p>Name: <span class="non-bold">${candidate.candidate_name}</span></p>
-      <p>Party: <span class="non-bold">${candidate.party_name}</span></p>
-      <p>District: <span class="non-bold">${candidate.district}</span></p>
-      <p>State: <span class="non-bold">${candidate.state}</span></p>
-      </div>
-      </div>
-          <input type="radio" name="candidate" value="${candidate.id}" id="candidate-${index}">
+          <div class="voters-svg">
+            <div>
+              <img src="${candidate.party_image}" alt="${candidate.party_name}" class="avatar" />
+            </div>
+            <div>
+              <img src="${candidate.avatar}" alt="${candidate.candidate_name}" class="avatar" />
+            </div>
+          </div>
+        </div>
+          <div class="voters-information">
+            <div class="voter-details">
+              <p>Name: <span class="non-bold">${candidate.candidate_name}</span></p>
+              <p>Party: <span class="non-bold">${candidate.party_name}</span></p>
+              <p>District: <span class="non-bold">${candidate.district}</span></p>
+              <p>State: <span class="non-bold">${candidate.state}</span></p>          
+            </div>      
+            <div class="votes-value">
+              <div>
+                <p class="non-bold votescount">${voteCount}</p>
+              </div>
+              <div>
+                <p class="votescount-name">Vote Count</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>`;
 
       candidatesContainer.appendChild(candidateDiv);
-    });
+    }
   } catch (error) {
     console.error("Error fetching candidates:", error);
   }
 }
+
 const candidatesContainerDashboard= document.getElementById("candidates-container-dashboard");
 
 if (candidatesContainerDashboard) {
